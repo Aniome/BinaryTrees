@@ -1,8 +1,6 @@
 package org.BinaryTrees;
 
-import org.w3c.dom.Node;
-
-public class BinaryTree<T> {
+public class BinaryTree<T extends Comparable<T>> {
     private TreeNode<T> root;
     private int depth;
     private int size;
@@ -11,22 +9,26 @@ public class BinaryTree<T> {
         if (size == 0) {
             add(data, null);
         } else {
-            add(data, root);
+            root = add(data, root);
         }
         size++;
     }
 
     private TreeNode<T> add(T data, TreeNode<T> node) {
         if (node == null) {
-            root = new TreeNode<>();
-            root.data = data;
-            root.left = null;
-            root.right = null;
-            root.parent = null;
+            node = new TreeNode<>();
+            node.data = data;
+            node.left = null;
+            node.right = null;
+            node.parent = null;
             depth++;
-            return root;
+            return node;
         }
-//      if (data < node.data) {}
+        if (node.data.compareTo(data) < 0) {
+            node.left = add(data, root.left);
+        } else {
+            node.right = add(data, root.right);
+        }
         return node;
     }
 
