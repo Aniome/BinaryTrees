@@ -2,14 +2,13 @@ package org.BinaryTrees;
 
 public class BinaryTree<T extends Comparable<T>> {
     private TreeNode<T> root;
-    private int depth;
     private int size;
 
     public void add(T data) {
         if (size == 0) {
-            add(data, null);
+            root = add(data, null);
         } else {
-            root = add(data, root);
+            add(data, root);
         }
         size++;
     }
@@ -20,16 +19,30 @@ public class BinaryTree<T extends Comparable<T>> {
             node.data = data;
             node.left = null;
             node.right = null;
-            node.parent = null;
-            depth++;
+            //node.parent = ?;
             return node;
         }
-        if (node.data.compareTo(data) < 0) {
-            node.left = add(data, root.left);
+        if (data.compareTo(node.data) < 0) {
+            node.left = add(data, node.left);
         } else {
-            node.right = add(data, root.right);
+            node.right = add(data, node.right);
         }
         return node;
     }
+
+    public int getDepth() {
+        return getDepth(root, 0);
+    }
+
+    private int getDepth(TreeNode<T> node, int depth) {
+        if (node == null) {
+            return depth;
+        }
+        int depthLeft = getDepth(node.left, depth);
+        int depthRight = getDepth(node.right, depth);
+        return Math.max(depthLeft, depthRight) + 1;
+    }
+
+
 
 }
