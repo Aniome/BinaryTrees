@@ -2,7 +2,7 @@ package org.BinaryTrees;
 
 public class Main {
     public static void main(String[] args) {
-        BinaryTree<Integer> tree = new BinaryTree();
+        BinaryTree<Integer> tree = new BinaryTree<>();
         tree.add(5);
 
         tree.add(3);
@@ -12,7 +12,9 @@ public class Main {
         tree.add(7);
         tree.add(6);
         tree.add(9);
-        System.out.println("depth = " + tree.getDepth());
+        //tree.DFSPreorder();
+        //tree.BFS();
+        System.out.println(tree);
     }
     //      5
     //  3       7
