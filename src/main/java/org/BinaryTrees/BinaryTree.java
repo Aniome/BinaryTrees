@@ -59,6 +59,20 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
+    public void DFSInorder() {
+        if (!isTreeEmpty()) {
+            DFSInorder(root);
+        }
+    }
+
+    private void DFSInorder(TreeNode<T> node) {
+        if (node != null) {
+            DFSPreorder(node.left);
+            System.out.println(node.data);
+            DFSPreorder(node.right);
+        }
+    }
+
     public void BFS(){
         if (!isTreeEmpty()) {
             BFS(root);
