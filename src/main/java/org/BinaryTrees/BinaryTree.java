@@ -73,6 +73,20 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
+    public void DFSPostorder() {
+        if (!isTreeEmpty()) {
+            DFSPostorder(root);
+        }
+    }
+
+    private void DFSPostorder(TreeNode<T> node) {
+        if (node != null) {
+            DFSPostorder(node.left);
+            DFSPostorder(node.right);
+            System.out.println(node.data);
+        }
+    }
+
     public void BFS(){
         if (!isTreeEmpty()) {
             BFS(root);
