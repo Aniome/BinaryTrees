@@ -15,7 +15,10 @@ public class Main {
         //tree.DFSPreorder();
         //tree.BFS();
         //tree.DFSInorder();
-        tree.DFSPostorder();
+        //tree.DFSPostorder();
+
+        tree.find(9);
+
         System.out.println();
         System.out.println(tree);
     }

@@ -21,7 +21,6 @@ public class BinaryTree<T extends Comparable<T>> {
             node.data = data;
             node.left = null;
             node.right = null;
-            //node.parent = ?;
             return node;
         }
         if (data.compareTo(node.data) < 0) {
@@ -108,8 +107,32 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
+    public void find(T data){
+        if (find(data, root)) {
+            System.out.println(data + " is found");
+        } else {
+            System.out.println(data + " is not found");
+        }
+    }
 
-    private boolean isTreeEmpty(){
+    private boolean find(T data, TreeNode<T> node) {
+        Optional<TreeNode<T>> nodeData = Optional.ofNullable(node);
+        if (nodeData.isPresent()) {
+            T value = nodeData.get().data;
+            if (data.equals(value)) {
+                return true;
+            }
+            if (data.compareTo(value) < 0) {
+                return find(data, node.left);
+            } else {
+                return find(data, node.right);
+            }
+        }
+        return false;
+    }
+
+
+    public boolean isTreeEmpty(){
         if (size == 0){
             System.out.println("Tree is empty");
             return true;
