@@ -8,27 +8,60 @@ public class BinaryTree<T extends Comparable<T>> {
 
     public void add(T data) {
         if (size == 0) {
-            root = add(data, null);
+            root = add(data, null, null);
         } else {
-            add(data, root);
+            add(data, root, root.parent);
         }
         size++;
     }
 
-    private TreeNode<T> add(T data, TreeNode<T> node) {
+    private TreeNode<T> add(T data, TreeNode<T> node, TreeNode<T> parent) {
         if (node == null) {
             node = new TreeNode<>();
             node.data = data;
             node.left = null;
             node.right = null;
+            node.parent = parent;
             return node;
         }
         if (data.compareTo(node.data) < 0) {
-            node.left = add(data, node.left);
+            node.left = add(data, node.left, node);
         } else {
-            node.right = add(data, node.right);
+            node.right = add(data, node.right, node);
         }
         return node;
+    }
+
+    public void delete(T data) {
+        if (size == 0) {
+            return;
+        }
+        Optional<TreeNode<T>> optionalNode = Optional.ofNullable(find(data, root));
+        if (optionalNode.isPresent()) {
+            TreeNode<T> node = optionalNode.get();
+            if (node.left == null && node.right == null) {
+                deleteLeaf(node);
+            }
+            if ((node.left != null && node.right == null) || (node.left == null && node.right != null)) {
+                //some function
+            }
+            if (node.left != null && node.right != null) {
+                //some function
+            }
+        } else {
+            System.out.println("Node not found");
+        }
+    }
+
+    private void deleteLeaf(TreeNode<T> node) {
+        TreeNode<T> parent = node.parent;
+        node.data = null;
+        if (parent.left == node){
+            parent.left = null;
+        }
+        if (parent.right == node){
+            parent.right = null;
+        }
     }
 
     public int getDepth() {
@@ -108,19 +141,20 @@ public class BinaryTree<T extends Comparable<T>> {
     }
 
     public void find(T data){
-        if (find(data, root)) {
+        Optional<TreeNode<T>> node = Optional.ofNullable(find(data, root));
+        if (node.isPresent()) {
             System.out.println(data + " is found");
         } else {
             System.out.println(data + " is not found");
         }
     }
 
-    private boolean find(T data, TreeNode<T> node) {
+    private TreeNode<T> find(T data, TreeNode<T> node) {
         Optional<TreeNode<T>> nodeData = Optional.ofNullable(node);
         if (nodeData.isPresent()) {
             T value = nodeData.get().data;
             if (data.equals(value)) {
-                return true;
+                return node;
             }
             if (data.compareTo(value) < 0) {
                 return find(data, node.left);
@@ -128,7 +162,7 @@ public class BinaryTree<T extends Comparable<T>> {
                 return find(data, node.right);
             }
         }
-        return false;
+        return null;
     }
 
 
