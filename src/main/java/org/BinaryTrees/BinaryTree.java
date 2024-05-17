@@ -42,8 +42,11 @@ public class BinaryTree<T extends Comparable<T>> {
             if (node.left == null && node.right == null) {
                 deleteLeaf(node);
             }
-            if ((node.left != null && node.right == null) || (node.left == null && node.right != null)) {
+            if (node.left == null && node.right != null) {
                 //some function
+            }
+            if (node.left != null && node.right == null) {
+                deleteLeftNode(node);
             }
             if (node.left != null && node.right != null) {
                 //some function
@@ -51,6 +54,19 @@ public class BinaryTree<T extends Comparable<T>> {
         } else {
             System.out.println("Node not found");
         }
+    }
+
+    private void deleteLeftNode(TreeNode<T> node) {
+        TreeNode<T> parent = node.parent;
+        if (parent.left == node) {
+            parent.left = node.left;
+        } else {
+            parent.right = node.left;
+        }
+        node.parent = null;
+        node.left = null;
+        node.right = null;
+        node.data = null;
     }
 
     private void deleteLeaf(TreeNode<T> node) {

@@ -7,7 +7,7 @@ public class Main {
 
         tree.add(3);
         tree.add(1);
-        tree.add(4);
+        //tree.add(4);
 
         tree.add(7);
         tree.add(6);
@@ -18,7 +18,7 @@ public class Main {
         //tree.DFSPostorder();
 
         tree.find(9);
-        tree.delete(9);
+        tree.delete(3);
         System.out.println();
         System.out.println(tree);
     }
