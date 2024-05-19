@@ -39,11 +39,14 @@ public class BinaryTree<T extends Comparable<T>> {
         Optional<TreeNode<T>> optionalNode = Optional.ofNullable(find(data, root));
         if (optionalNode.isPresent()) {
             TreeNode<T> node = optionalNode.get();
+            if (node == root){
+                deleteNode(node);
+            }
             if (node.left == null && node.right == null) {
                 deleteLeaf(node);
             }
             if (node.left == null && node.right != null) {
-                //some function
+                deleteRightNode(node);
             }
             if (node.left != null && node.right == null) {
                 deleteLeftNode(node);
@@ -51,6 +54,7 @@ public class BinaryTree<T extends Comparable<T>> {
             if (node.left != null && node.right != null) {
                 //some function
             }
+            size--;
         } else {
             System.out.println("Node not found");
         }
@@ -63,10 +67,17 @@ public class BinaryTree<T extends Comparable<T>> {
         } else {
             parent.right = node.left;
         }
-        node.parent = null;
-        node.left = null;
-        node.right = null;
-        node.data = null;
+        deleteNode(node);
+    }
+
+    private void deleteRightNode(TreeNode<T> node) {
+        TreeNode<T> parent = node.parent;
+        if (parent.right == node) {
+            parent.right = node.right;
+        } else {
+            parent.left = node.right;
+        }
+        deleteNode(node);
     }
 
     private void deleteLeaf(TreeNode<T> node) {
@@ -78,6 +89,14 @@ public class BinaryTree<T extends Comparable<T>> {
         if (parent.right == node){
             parent.right = null;
         }
+        deleteNode(node);
+    }
+
+    private void deleteNode(TreeNode<T> node) {
+        node.parent = null;
+        node.left = null;
+        node.right = null;
+        node.data = null;
     }
 
     public int getDepth() {
