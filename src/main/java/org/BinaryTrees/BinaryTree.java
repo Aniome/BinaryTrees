@@ -52,12 +52,38 @@ public class BinaryTree<T extends Comparable<T>> {
                 deleteLeftNode(node);
             }
             if (node.left != null && node.right != null) {
-                //some function
+                deleteTwoChildNode(node);
             }
             size--;
         } else {
             System.out.println("Node not found");
         }
+    }
+
+    private void deleteTwoChildNode(TreeNode<T> node) {
+        TreeNode<T> replaceNode = findMinNode(node.right);
+        TreeNode<T> parent = node.parent;
+        replaceNode.parent = parent;
+        replaceNode.left = node.left;
+        if (node.right != replaceNode) {
+            replaceNode.right = node.right;
+        }
+        if (parent.left == node){
+            parent.left = replaceNode;
+        } else {
+            parent.right = replaceNode;
+        }
+        deleteNode(node);
+    }
+
+    private TreeNode<T> findMinNode(TreeNode<T> node) {
+        if (node.left != null) {
+            return findMinNode(node.left);
+        }
+        if (node.right != null) {
+            return findMinNode(node.right);
+        }
+        return node;
     }
 
     private void deleteLeftNode(TreeNode<T> node) {
