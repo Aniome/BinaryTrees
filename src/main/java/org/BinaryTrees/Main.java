@@ -18,9 +18,10 @@ public class Main {
         //tree.DFSPostorder();
 
         tree.find(9);
-        tree.delete(3);
+        //tree.delete(3);
         System.out.println();
-        System.out.println(tree);
+        //System.out.println(tree);
+        tree.TreePrinter();
     }
     //      5
     //  3       7
